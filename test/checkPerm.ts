@@ -11,15 +11,15 @@ describe("Check for Permission", () => {
       const res = check("test", {test: true});
       assert.strictEqual(res, true);
     });
-    it.skip("allow single string permission with deep true object", () => {
+    it("deny single string permission with deep true object", () => {
       const res = check("test", {test: {test: true}});
-      assert.strictEqual(res, true);
+      assert.strictEqual(res, false);
     });
     it("disallow single string permission with single false object", () => {
       const res = check("test", {test: false});
       assert.strictEqual(res, false);
     });
-    it.skip("disallow single string permission with deep false object", () => {
+    it("disallow single string permission with deep false object", () => {
       const res = check("test", {test: {test: false}});
       assert.strictEqual(res, false);
     });
@@ -31,7 +31,7 @@ describe("Check for Permission", () => {
       const res = check("test", {test: {"*": false}});
       assert.strictEqual(res, false);
     });
-    describe.skip("if key does not exist", () => {
+    describe("if key does not exist", () => {
       it("disallow single string permission if key does not exist", () => {
         const res = check("test", {xxx: {"*": false}});
         assert.strictEqual(res, false);
@@ -57,11 +57,11 @@ describe("Check for Permission", () => {
 
   });
   describe("double string 'test.test' permission", () => {
-    it.skip("allow for double permission", () => {
+    it("allow for double permission", () => {
       const res = check("test.test", {test: true});
-      assert.strictEqual(res, true);
+      assert.strictEqual(res, false);
     });
-    it.skip("disallow for double permission", () => {
+    it("disallow for double permission", () => {
       const res = check("test.test", {test: false});
       assert.strictEqual(res, false);
     });
@@ -69,11 +69,11 @@ describe("Check for Permission", () => {
       const res = check("test.test", {test: {test: false}});
       assert.strictEqual(res, false);
     });
-    it.skip("disallow for double permission with non existing key", () => {
+    it("disallow for double permission with non existing key", () => {
       const res = check("test.test", {test: {xxx: true}});
       assert.strictEqual(res, false);
     });
-    it.skip("disallow for double permission with non existing key", () => {
+    it("disallow for double permission with non existing key", () => {
       const res = check("test.test", {test: {xxx: false}});
       assert.strictEqual(res, false);
     });
@@ -95,27 +95,27 @@ describe("Check for Permission", () => {
     });
   });
   describe("double string 'test.test.*' permission", () => {
-    it.skip("allow for double permission", () => {
+    it("Deny for none existing *", () => {
       const res = check("test.test.*", {test: true});
-      assert.strictEqual(res, true);
+      assert.strictEqual(res, false);
     });
-    it.skip("disallow for double permission", () => {
+    it("disallow for double permission", () => {
       const res = check("test.test.*", {test: false});
       assert.strictEqual(res, false);
     });
-    it.skip("allow for double permission", () => {
+    it("Deny for double none existing *", () => {
       const res = check("test.test.*", {test: {test: true}});
-      assert.strictEqual(res, true);
+      assert.strictEqual(res, false);
     });
-    it.skip("disallow for double permission", () => {
+    it("disallow for double permission", () => {
       const res = check("test.test.*", {test: {test: false}});
       assert.strictEqual(res, false);
     });
-    it.skip("disallow for double permission with non existing key", () => {
+    it("disallow for double permission with non existing key", () => {
       const res = check("test.test.*", {test: {xxx: true}});
       assert.strictEqual(res, false);
     });
-    it.skip("disallow for double permission with non existing key", () => {
+    it("disallow for double permission with non existing key", () => {
       const res = check("test.test.*", {test: {xxx: false}});
       assert.strictEqual(res, false);
     });
@@ -135,11 +135,11 @@ describe("Check for Permission", () => {
       const res = check("test.test.*", {test: {test: {"*": true}}});
       assert.strictEqual(res, true);
     });
-    it.skip("allow for double permission with with deep obj and wildcard", () => {
+    it("Deny for double permission * with with deep obj without wildcard", () => {
       const res = check("test.test.*", {test: {test: {test2: true}}});
-      assert.strictEqual(res, true);
+      assert.strictEqual(res, false);
     });
-    it.skip("disallow for double permission with deep obj and wildcard", () => {
+    it("disallow for double permission with deep obj and wildcard", () => {
       const res = check("test.test.*", {test: {test: {test2: false}}});
       assert.strictEqual(res, false);
     });
@@ -157,14 +157,14 @@ describe("Check for Permission", () => {
       const res = check("test.test2.test3", {test: {test2: {"*": false}}});
       assert.strictEqual(res, false);
     });
-    it.skip("disallow for double permission with deep obj and wildcard in the middle", () => {
+    it("disallow for double permission with deep obj and wildcard in the middle", () => {
       //test3 should be more prioritized than "*"
-      const res = check("test.test2.test3", {test: {"*": {"*": true}, test3: false}});
+      const res = check("test.test2.test3", {test: {"*": {"*": true, test3: false}}});
       assert.strictEqual(res, false);
     });
-    it.skip("disallow for double permission with deep obj and wildcard in the middle", () => {
+    it("disallow for double permission with deep obj and wildcard in the middle 2", () => {
       //test3 should be more prioritized than "*"
-      const res = check("test.test2.test3", {test: {"*": {"*": false}, test3: true}});
+      const res = check("test.test2.test3", {test: {"*": {"*": false, test3: true}}});
       assert.strictEqual(res, true);
     });
   });
@@ -173,7 +173,7 @@ describe("Check for Permission", () => {
       const res = check("test.xxx.test3", {test: {"*": {"*": true}, test3: false}});
       assert.strictEqual(res, true);
     });
-    it.skip("disallow for double permission with deep obj and wildcard in the middle", () => {
+    it("disallow for double permission with deep obj and wildcard in the middle", () => {
       const res = check("test2.xxx.test3", {test: {"*": {"*": true}, test3: false}});
       assert.strictEqual(res, false);
     });
