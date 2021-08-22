@@ -1,7 +1,7 @@
 import {PermObject} from "./interfaces/permObject";
 import {PermAction} from "./interfaces/permAction";
 
-function checkRec(permission: string[],  perms: PermObject | boolean, wildcard: boolean = false): PermAction | undefined {
+function checkRec(permission: string[], perms: PermObject | boolean, wildcard: boolean = false): PermAction | undefined {
   if (typeof perms === 'boolean') {
     if (permission.length == 0 || wildcard === true) return {action: perms, depth: wildcard ? 0 : 1}; // Exact Match or final Wildcard reached
     return undefined; // End of Tree reached without any match
@@ -9,8 +9,16 @@ function checkRec(permission: string[],  perms: PermObject | boolean, wildcard: 
 
 
   let results: PermAction[] = [];
-  if (perms['*'] !== undefined) results.push(checkRec(permission.slice(1), perms['*'], true));
-  if (perms[permission[0]] !== undefined) results.push(checkRec(permission.slice(1), perms[permission[0]]));
+  if (permission[0] === '$') {
+    for (let key in perms) {
+      if (perms.hasOwnProperty(key))
+        results.push(checkRec(permission.slice(1), perms[key], key === '*'));
+    }
+  } else {
+    if (perms['*'] !== undefined) results.push(checkRec(permission.slice(1), perms['*'], true));
+    if (perms[permission[0]] !== undefined) results.push(checkRec(permission.slice(1), perms[permission[0]]));
+  }
+
 
   results = results.filter(value => typeof value === 'object');
 
