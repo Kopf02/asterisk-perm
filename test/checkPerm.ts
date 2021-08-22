@@ -144,4 +144,42 @@ describe("Check for Permission", () => {
       assert.strictEqual(res, false);
     });
   });
+  describe("triple string 'test.test2.test3' permission", () => {
+    it("allow for double permission with deep obj", () => {
+      const res = check("test.test2.test3", {test: {test2: {test3: true}}});
+      assert.strictEqual(res, true);
+    });
+    it("disallow for double permission with deep obj", () => {
+      const res = check("test.test2.test3", {test: {test2: {test3: false}}});
+      assert.strictEqual(res, false);
+    });
+    it("disallow for double permission with deep obj and wildcard", () => {
+      const res = check("test.test2.test3", {test: {test2: {"*": false}}});
+      assert.strictEqual(res, false);
+    });
+    it.skip("disallow for double permission with deep obj and wildcard in the middle", () => {
+      //test3 should be more prioritized than "*"
+      const res = check("test.test2.test3", {test: {"*": {"*": true}, test3: false}});
+      assert.strictEqual(res, false);
+    });
+    it.skip("disallow for double permission with deep obj and wildcard in the middle", () => {
+      //test3 should be more prioritized than "*"
+      const res = check("test.test2.test3", {test: {"*": {"*": false}, test3: true}});
+      assert.strictEqual(res, true);
+    });
+  });
+  describe("Miscellaneous", () => {
+    it("allow for double permission with deep obj and wildcard in the middle", () => {
+      const res = check("test.xxx.test3", {test: {"*": {"*": true}, test3: false}});
+      assert.strictEqual(res, true);
+    });
+    it.skip("disallow for double permission with deep obj and wildcard in the middle", () => {
+      const res = check("test2.xxx.test3", {test: {"*": {"*": true}, test3: false}});
+      assert.strictEqual(res, false);
+    });
+    it("allow for double permission with deep obj and wildcard in the middle", () => {
+      const res = check("xxx", {xxx: {"*": {"*": true}, test3: false}});
+      assert.strictEqual(res, true);
+    });
+  })
 });
