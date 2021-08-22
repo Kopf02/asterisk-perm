@@ -1,38 +1,43 @@
 import {PermObject} from "./interfaces/permObject";
 import {PermAction} from "./interfaces/permAction";
 
-function checkRec(permission: string[], perms: PermObject | boolean | undefined, parent: string = null): PermAction | undefined {
-  if (typeof perms === 'undefined') return undefined;
-
+function checkRec(permission: string[], perms: PermObject | boolean, wildcard: boolean = false): PermAction | null {
   if (typeof perms === 'boolean') {
-    if (permission.length == 0 || parent === '*') return {action: perms, depth: parent === '*' ? 0 : 1}; // Exact Match or final Wildcard reached
-    return undefined; // End of Tree reached without any match
+    return {action: perms, depth: permission.length}
   }
-
-  let results: PermAction[] = [];
 
   if (permission[0] === '$') {
+    let results: PermAction[] = [];
     for (let key in perms) {
-      if (perms.hasOwnProperty(key) && key !== '_')
-        results.push(checkRec(permission.slice(1), perms[key], key));
+      if (perms.hasOwnProperty(key) && key !== '_') {
+        let res = checkRec(permission.slice(1), perms[key], key === '*');
+        if (res) results.push(res);
+      }
     }
-  } else {
-    results.push(checkRec(permission.slice(1), perms['*'], '*'));
-
-    if (permission.length === 0)
-      results.push(checkRec(permission.slice(1), perms['_'], '_'));
-    else results.push(checkRec(permission.slice(1), perms[permission[0]], permission[0]));
+    return results.reduce((prev, curr) => curr.depth < prev.depth || prev.depth === -1 ? curr : prev, {depth: -1, action: false});
   }
 
+  if (permission.length > 0 && perms[permission[0]] !== undefined) {
+    let res = checkRec(permission.slice(1), perms[permission[0]]);
+    if (res) return res;
+  }
+  if (permission.length === 0 && perms['_'] !== undefined) return checkRec([], perms['_']); //Must the final Call
+  if (perms['*'] !== undefined) return checkRec(permission.slice(1), perms['*'], true);
+  if (wildcard && perms['_'] !== undefined) return checkRec([], perms['_']);
+  return null;
+
+
+/*  let results: PermAction[] = [];
 
   results = results.filter(value => typeof value === 'object');
 
   let result = results.reduce((prev, curr) => curr.depth > prev.depth ? curr : prev, {depth: -1, action: false});
   result.depth++;
-  return result;
+  return result;*/
 
 }
 
 export default function (permission: string, perms: PermObject): boolean {
-  return checkRec(permission.split("."), perms).action;
+  let res = checkRec(permission.split("."), perms);
+  return res === null ? false : res.action;
 }

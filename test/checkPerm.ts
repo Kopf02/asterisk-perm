@@ -8,7 +8,7 @@ import * as assert from "assert";
 describe("Check for Permission", () => {
   describe("single string 'test' permission", () => {
     it("allow single string permission with single true object", () => {
-      const res = check("test", {test: {_: true}});
+      const res = check("test", {test: true});
       assert.strictEqual(res, true);
     });
     it("deny single string permission with deep true object", () => {
@@ -16,7 +16,7 @@ describe("Check for Permission", () => {
       assert.strictEqual(res, false);
     });
     it("disallow single string permission with single false object", () => {
-      const res = check("test", {test: {_: false}});
+      const res = check("test", {test: false});
       assert.strictEqual(res, false);
     });
     it("disallow single string permission with deep false object", () => {
