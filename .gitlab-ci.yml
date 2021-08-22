@@ -1,0 +1,18 @@
+unit-test:
+  variables:
+    NODE_ENV: test
+  image: node:14-alpine3.13
+  stage: test
+  retry: 1
+  timeout: 5m
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  before_script:
+    - npm i
+  script:
+    - npm test
+  artifacts:
+    reports:
+      junit:
+        - test-results.xml
+      cobertura:
+        - coverage/cobertura-coverage.xml
