@@ -168,18 +168,79 @@ describe("Check for Permission", () => {
       assert.strictEqual(res, true);
     });
   });
+  describe("permission query with '$'", () => {
+    it("allow single string permission with single true object", () => {
+      const res = check("$", {test: true});
+      assert.strictEqual(res, true);
+    });
+    it("deny single string permission with single true object", () => {
+      const res = check("$", {test: false});
+      assert.strictEqual(res, false);
+    });
+    it("allow single string permission with single true wildcard object", () => {
+      const res = check("$", {"*": true});
+      assert.strictEqual(res, true);
+    });
+    it("deny single string permission with single false wildcard object", () => {
+      const res = check("$", {"*": false});
+      assert.strictEqual(res, false);
+    });
+    it("allow single string permission with $ at the end and single double true object", () => {
+      const res = check("test.$", {test: {test2: true}});
+      assert.strictEqual(res, true);
+    });
+    it("deny single string permission with $ at the end and single double false object", () => {
+      const res = check("test.$", {test: {test2: false}});
+      assert.strictEqual(res, false);
+    });
+
+    it("allow single string permission with $ in the middle and single double true object", () => {
+      const res = check("test.$.test", {test: {test2: {test: true}}});
+      assert.strictEqual(res, true);
+    });
+    it("deny single string permission with $ in the middle and single double false object", () => {
+      const res = check("test.$.test", {test: {test2: {test: false}}});
+      assert.strictEqual(res, false);
+    });
+
+    it("allow single string permission with $ in the middle and single double true object with wildcard", () => {
+      const res = check("test.$.test", {test: {"*": {test: true}}});
+      assert.strictEqual(res, true);
+    });
+    it("deny single string permission with $ in the middle and single double false object with wildcard", () => {
+      const res = check("test.$.test", {test: {"*": {test: false}}});
+      assert.strictEqual(res, false);
+    });
+  })
   describe("Miscellaneous", () => {
-    it("allow for double permission with deep obj and wildcard in the middle", () => {
+    it("allow for triple permission with deep obj and wildcard in the middle", () => {
       const res = check("test.xxx.test3", {test: {"*": {"*": true}, test3: false}});
       assert.strictEqual(res, true);
     });
     it("disallow for double permission with deep obj and wildcard in the middle", () => {
-      const res = check("test2.xxx.test3", {test: {"*": {"*": true}, test3: false}});
+      const res = check("test2.xxx.test3", {test: {"*": {"*": true, test3: false}}});
       assert.strictEqual(res, false);
     });
-    it("allow for double permission with deep obj and wildcard in the middle", () => {
+    it("allow for single permission with deep obj and wildcard in the middle", () => {
       const res = check("xxx", {xxx: {"*": {"*": true}, test3: false}});
       assert.strictEqual(res, true);
+    });
+
+    it("allow for x.*.* permission with deep obj and wildcard in the middle", () => {
+      const res = check("xxx.*.*", {xxx: {"*": {"*": true, test3: false}}});
+      assert.strictEqual(res, true);
+    });
+    it("allow for $ and * permission with deep obj and wildcard in the middle", () => {
+      const res = check("xxx.$.test.*", {xxx: {"*": {"*": false, test3: true}}});
+      assert.strictEqual(res, false);
+    });
+    it("allow for $ and * permission with deep obj and two wildcard in the middle", () => {
+      const res = check("xxx.$.test.*", {xxx: {"*": {"*": true, test3: false}}});
+      assert.strictEqual(res, true);
+    });
+    it("deny for $ with double permission with deep obj and wildcard in the middle", () => {
+      const res = check("xxx.$.test.test3", {xxx: {"*": {"*": {"*" : true, test3: false}}}});
+      assert.strictEqual(res, false);
     });
   })
 });
