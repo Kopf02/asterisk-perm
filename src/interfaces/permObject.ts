@@ -1,3 +1,12 @@
-export interface PermObject {
-  [index: string]: PermObject | boolean;
+/*export interface PermObject {
+  _: boolean;
+  [index: string]: PermObject;
+}*/
+
+interface Perms { //irgendwie muss das optional sein
+  [key: string]: PermObject;
 }
+
+export type PermObject = Perms | {
+  _?: boolean;
+};

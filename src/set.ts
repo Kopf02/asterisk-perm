@@ -9,6 +9,8 @@ import {PermObject} from "./interfaces/permObject";
  * @return boolean - If permission could be set successfully
  */
 export default function (permission: string, value: boolean, perms: PermObject): boolean {
+  let permArray = permission.split('.');
+
   return null; //Todo: implement
 }
 //todo return new perm object if used as stateless method
