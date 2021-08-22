@@ -1,7 +1,13 @@
 unit-test:
+  # to set a possible different behavior of application
   variables:
     NODE_ENV: test
+  # test with LTS nodejs
   image: node:14-alpine3.13
+  # to run on specific gitlab runner
+  tags:
+    - tests
+    - docker
   stage: test
   retry: 1
   timeout: 5m
