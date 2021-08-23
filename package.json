@@ -11,7 +11,16 @@
   "keywords": [
     "permissions"
   ],
-  "author": "Jens Hummel",
+  "author": {
+    "name": "Jens Hummel",
+    "email": "jens_hu@6nt.de"
+  },
+  "contributors": [
+    {
+      "name": "Nico Wagner",
+      "email": "info@ni-wa.de"
+    }
+  ],
   "license": "ISC",
   "devDependencies": {
     "@types/eslint": "^7.28.0",
