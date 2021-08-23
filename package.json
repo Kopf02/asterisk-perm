@@ -1,10 +1,12 @@
 {
-  "name": "asterisk-perm",
+  "name": "@jeni/asterisk-perm",
   "version": "1.0.0",
   "description": "Simple and performant NodeJS Permission System",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "nyc --reporter cobertura --reporter=text mocha --exit -r ts-node/register test/*.ts --reporter mocha-multi-reporters --reporter-options configFile=test/reporter.config.json"
+    "test": "nyc --reporter cobertura --reporter=text mocha --exit -r ts-node/register test/*.ts --reporter mocha-multi-reporters --reporter-options configFile=test/reporter.config.json",
+    "build": "tsc"
   },
   "keywords": [
     "permissions"
