@@ -25,6 +25,12 @@ describe("Unset permissions to obj", () => {
       assert.deepStrictEqual(data, {test: {_: true, test9: false}}, 'Verify Permission Object Data');
       assert.strictEqual(res, true, 'Element should exist and deleted');
     });
+    it("remove root._ value from obj", () => {
+      let data: PermObject = {test: {_: true}};
+      let res = unset("test", data);
+      assert.deepStrictEqual(data, {}, 'Verify Permission Object Data');
+      assert.strictEqual(res, true, 'Element should exist and deleted');
+    });
 
   });
   describe("Unset non existing values", () => {
