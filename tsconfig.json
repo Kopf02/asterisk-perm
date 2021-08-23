@@ -14,13 +14,16 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "pretty": true,
-    "declaration": false,
+
     "allowJs": true,
     "noEmit": false,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "importHelpers": false,
-    "baseUrl": "src"
+    "baseUrl": "src",
+
+    "declaration": true,
+    "declarationDir": "dist"
   },
   "include": ["src/**/*.ts", "src/**/*.json", ".env"],
   "exclude": [
