@@ -12,12 +12,12 @@ describe("Unset permissions to obj", () => {
     });
     it("remove root value from deep nested obj", () => {
       let res = unset("test", data);
-      assert.deepStrictEqual(data, {}, 'Verify Permission Object Data');
+      assert.deepStrictEqual(data, {test: {test2: {test3: false}, test9: false}}, 'Verify Permission Object Data');
       assert.strictEqual(res, false, 'Element should exist and deleted');
     });
     it("remove root.root value from deep nested obj", () => {
-      let res = unset("test.test", data);
-      assert.deepStrictEqual(data, {test: {test2: {test3: false}, test9: false}}, 'Verify Permission Object Data');
+      let res = unset("test.test9", data);
+      assert.deepStrictEqual(data, {test: {_: true, test2: {test3: false}}}, 'Verify Permission Object Data');
       assert.strictEqual(res, false, 'Element should not exist');
     });
     it("remove existing value from deep nested obj", () => {
