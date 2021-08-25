@@ -3,19 +3,24 @@ import set from "./set";
 import unset from "./unset";
 import {PermObject} from "./interfaces/permObject";
 import toArray from "./toArray";
+import fromArray from "./fromArray";
 
 /**
  * Class wrapper for functions, so you do not have to pass the permObject every time to the function
  * @author Nico Wagner
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0 24.08.2021
  * @class
  */
 class PermClass {
   private _obj: PermObject;
 
-  constructor(obj?: PermObject) {
-    if (obj) this._obj = obj;
+  constructor(array: string[])
+  constructor(obj: PermObject)
+  constructor()
+  constructor(obj?: PermObject | string[]) {
+    if (Array.isArray(obj)) this._obj = fromArray(obj);
+    else if (obj) this._obj = obj;
     else this._obj = {};
   }
 
@@ -99,6 +104,16 @@ class PermClass {
   toArray() {
     return toArray(this._obj);
   }
+
+  /**
+   * Converts Array to PermClass Object
+   * @param {string[]} permissions - Permission Array
+   * @return PermClass
+   */
+  static fromArray(permissions: string[]) {
+    let data = fromArray(permissions);
+    return new PermClass(data);
+  }
 }
 
 // export function for static usage
@@ -107,7 +122,8 @@ export {
   set,
   unset,
   toArray,
-  PermClass
+  PermClass,
+  fromArray
 };
 
 export default PermClass;

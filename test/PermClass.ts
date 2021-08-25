@@ -71,4 +71,16 @@ describe("PermClass integration test", () => {
     const res = permClass.toArray();
     assert.deepStrictEqual(res, ["test.test2"], "Array should match json object");
   })
+
+  describe('fromArray', () => {
+    //check for fromArray
+    it("Check if object gets converted to json correctly", () => {
+      const res = PermClass.fromArray(["test.test.*", "-test.test2"]);
+      assert.deepStrictEqual(res.obj, {test: {test: {"*": true}, "test2": false}}, "Array should match json object");
+    })
+    it("Check if object gets converted to json correctly WITH CONSTRUCTOR", () => {
+      const res = new PermClass(["test.test.*", "-test.test2"]);
+      assert.deepStrictEqual(res.obj, {test: {test: {"*": true}, "test2": false}}, "Array should match json object");
+    })
+  });
 });
