@@ -90,6 +90,14 @@ class PermClass {
     check(permission, this._obj);
     return this;
   }
+
+  /**
+   * Function to Serialize the Class to an array of full-length-permissions string
+   * @return string[]
+   */
+  toArray() {
+    return toArray(this._obj);
+  }
 }
 
 // export function for static usage
