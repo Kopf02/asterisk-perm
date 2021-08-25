@@ -2,6 +2,7 @@ import check from "./check"
 import set from "./set";
 import unset from "./unset";
 import {PermObject} from "./interfaces/permObject";
+import toArray from "./toArray";
 
 /**
  * Class wrapper for functions, so you do not have to pass the permObject every time to the function
@@ -105,6 +106,7 @@ export {
   check,
   set,
   unset,
+  toArray,
   PermClass
 };
 

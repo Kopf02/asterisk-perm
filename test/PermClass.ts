@@ -66,4 +66,9 @@ describe("PermClass integration test", () => {
     const res = permClass.check("test", true);
     assert.strictEqual(res, false, "Permission should be true");
   });
+  //check for toArray
+  it("Check if object gets converted to array correctly", () => {
+    const res = permClass.toArray();
+    assert.deepStrictEqual(res, ["test.test2"], "Array should match json object");
+  })
 });
