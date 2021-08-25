@@ -27,7 +27,10 @@ export default function (permission: string,  perms: PermObject): boolean {
   if (!(element in perms)) return false;
   let x = perms[element];
   if (typeof x === 'boolean') delete perms[element];
-  else if ('_' in x) delete x._;
+  else if ('_' in x) {
+    handled.push({permission: element, perms});
+    delete x._;
+  }
   else return false;
 
   while (handled.length > 0) {
