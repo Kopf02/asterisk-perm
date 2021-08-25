@@ -16,6 +16,6 @@ describe("has Tests", () => {
   });
   it('check if permission is set 4',  () => {
     const res = has("test.test.*", {test: {test: {"*": true}}});
-    assert.strictEqual(res, false, "element should not exists");
+    assert.strictEqual(res, true, "element should exists");
   });
 })
