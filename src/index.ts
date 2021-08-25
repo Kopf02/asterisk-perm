@@ -4,6 +4,8 @@ import unset from "./unset";
 import {PermObject} from "./interfaces/permObject";
 import toArray from "./toArray";
 import fromArray from "./fromArray";
+import has from "./has";
+import get from "./get";
 
 /**
  * Class wrapper for functions, so you do not have to pass the permObject every time to the function
@@ -95,6 +97,24 @@ class PermClass {
     }
     check(permission, this._obj);
     return this;
+  }
+
+  /**
+   * Function to check if permsObject has given permission set
+   * @param permission
+   * @return boolean - True if permission is set, false if unset (not-set)
+   */
+  has(permission: string) {
+    return has(permission, this._obj);
+  }
+
+  /**
+   * check if permission string is set in PermObject or not
+   * @param permission
+   * @return {boolean | null} - Null if not set, otherwise return the value of the permission
+   */
+  get(permission: string) {
+    return get(permission, this._obj);
   }
 
   /**

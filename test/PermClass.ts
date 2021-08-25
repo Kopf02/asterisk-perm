@@ -83,4 +83,26 @@ describe("PermClass integration test", () => {
       assert.deepStrictEqual(res.obj, {test: {test: {"*": true}, "test2": false}}, "Array should match json object");
     })
   });
+
+  describe("get & has", () => {
+    it('get: check if permission is set',  () => {
+      const res = permClass.get("test.test");
+      assert.strictEqual(res, null, "element should not exists");
+    });
+    it('get: check if permission is set 2',  () => {
+      console.log(permClass)
+      const res = permClass.get("test.test2");
+      assert.strictEqual(res, true, "element should exists");
+    });
+
+    it('has: check if permission is set',  () => {
+      const res = permClass.has("test.test");
+      assert.strictEqual(res, false, "element should not exists");
+    });
+    it('has: check if permission is set 2',  () => {
+      console.log(permClass)
+      const res = permClass.has("test.test2");
+      assert.strictEqual(res, true, "element should exists");
+    });
+  })
 });
