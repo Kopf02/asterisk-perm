@@ -21,7 +21,12 @@
       "email": "info@ni-wa.de"
     }
   ],
-  "license": "ISC",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kopf02/asterisk-perm"
+  },
+  "homepage": "https://github.com/Kopf02/asterisk-perm/blob/main/Readme.md",
   "devDependencies": {
     "@types/eslint": "^7.28.0",
     "@types/eslint-plugin-prettier": "^3.1.0",
