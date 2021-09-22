@@ -1,5 +1,5 @@
 {
-  "name": "@jeni/asterisk-perm",
+  "name": "asterisk-perm",
   "version": "1.0.0",
   "description": "Simple and performant NodeJS Permission System",
   "main": "dist/index.js",
