@@ -26,4 +26,4 @@ if (result) {
 - Writing of unit tests and help with this project: @nico
 
 
-&copy; 2021 JeNi-Group Inc.
+&copy; 2021 Jens Hummel
