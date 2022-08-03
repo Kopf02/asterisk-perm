@@ -6,7 +6,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "nyc --reporter cobertura --reporter=text mocha --exit -r ts-node/register test/*.ts --reporter mocha-multi-reporters --reporter-options configFile=test/reporter.config.json",
-    "build": "tsc"
+    "build": "tsc",
+    "eslint": "eslint src/**"
   },
   "keywords": [
     "permissions"
@@ -32,6 +33,8 @@
     "@types/eslint-plugin-prettier": "^3.1.0",
     "@types/mocha": "^9.1.1",
     "@types/node": "^18.6.3",
+    "@typescript-eslint/eslint-plugin": "^5.32.0",
+    "@typescript-eslint/parser": "^5.32.0",
     "eslint": "^8.21.0",
     "eslint-plugin-prettier": "^4.2.1",
     "mocha": "^10.0.0",
