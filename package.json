@@ -6,7 +6,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "nyc --reporter cobertura --reporter=text mocha --exit -r ts-node/register test/*.ts --reporter mocha-multi-reporters --reporter-options configFile=test/reporter.config.json",
-    "build": "tsc"
+    "build": "tsc",
+    "eslint": "eslint src/**"
   },
   "keywords": [
     "permissions"
@@ -28,19 +29,21 @@
   },
   "homepage": "https://github.com/Kopf02/asterisk-perm/blob/main/Readme.md",
   "devDependencies": {
-    "@types/eslint": "^7.28.0",
+    "@types/eslint": "^8.4.5",
     "@types/eslint-plugin-prettier": "^3.1.0",
-    "@types/mocha": "^8.2.2",
-    "@types/node": "^16.7.1",
-    "eslint": "^7.32.0",
-    "eslint-plugin-prettier": "^3.4.1",
-    "mocha": "^8.4.0",
-    "mocha-junit-reporter": "^2.0.0",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^18.6.3",
+    "@typescript-eslint/eslint-plugin": "^5.32.0",
+    "@typescript-eslint/parser": "^5.32.0",
+    "eslint": "^8.21.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "mocha": "^10.0.0",
+    "mocha-junit-reporter": "^2.0.2",
     "mocha-multi-reporters": "^1.5.1",
     "nyc": "^15.1.0",
-    "prettier": "^2.3.2",
-    "ts-node": "^10.2.1",
-    "ts-node-dev": "^1.1.8",
-    "typescript": "^4.3.5"
+    "prettier": "^2.7.1",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.7.4"
   }
 }
