@@ -1,26 +1,23 @@
-import {PermObject} from "./interfaces/permObject";
+import { PermObject } from './interfaces/permObject';
 
-function toArrayRec(perms: PermObject, collector: Set<string>, parents: string = ''): void {
+function toArrayRec(perms: PermObject, collector: Set<string>, parents = ''): void {
+  const dottedParents = parents.length > 0 ? parents + '.' : parents;
 
-  let dottedParents = parents.length > 0 ? parents + '.' : parents;
+  for (const element in perms) {
+    if (!Object.getOwnPropertyDescriptor(perms, element)) continue;
 
-  for (let element in perms) {
-    if (!perms.hasOwnProperty(element)) continue;
-
-    let permission = dottedParents + element;
-    let value = perms[element];
-
+    const permission = dottedParents + element;
+    const value = perms[element];
 
     if (typeof value === 'boolean') {
-      let prefix = value ? '' : '-';
+      const prefix = value ? '' : '-';
       if (element === '_') collector.add(prefix + parents);
       else collector.add(prefix + permission);
     } else {
-      toArrayRec(value, collector, permission)
+      toArrayRec(value, collector, permission);
     }
   }
 }
-
 
 /**
  * Function to convert a PermObject to an array of full-length-permissions string
@@ -35,7 +32,7 @@ function toArrayRec(perms: PermObject, collector: Set<string>, parents: string =
  * @return string[]
  */
 export default function (perms: PermObject): string[] {
-  let collector = new Set<string>();
+  const collector = new Set<string>();
   toArrayRec(perms, collector);
   return Array.from(collector.values());
 }
