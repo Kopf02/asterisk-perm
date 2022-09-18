@@ -1,5 +1,5 @@
-import {PermObject} from "./interfaces/permObject";
-import get from "./get";
+import { PermObject } from './interfaces/permObject';
+import get from './get';
 
 /**
  * Function to check if PermObject has permissions string

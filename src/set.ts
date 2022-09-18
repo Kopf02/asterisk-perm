@@ -1,4 +1,4 @@
-import {PermObject} from "./interfaces/permObject";
+import { PermObject } from './interfaces/permObject';
 
 /***
  * Set a Permission in the Permissions Trie
@@ -9,8 +9,7 @@ import {PermObject} from "./interfaces/permObject";
  * @return boolean - Returns True if newly set and False if updated
  */
 export default function (permission: string, value: boolean, perms: PermObject): boolean {
-
-  let permArray = permission.split('.');
+  const permArray = permission.split('.');
 
   let element: string;
 
@@ -19,14 +18,13 @@ export default function (permission: string, value: boolean, perms: PermObject):
     if (!(element in perms)) {
       perms[element] = {};
       perms = perms[element] as PermObject;
-    }
-    else {
-      let x = perms[element];
+    } else {
+      const x = perms[element];
       if (typeof x === 'boolean') {
-        perms[element] = {_: x};
+        perms[element] = { _: x };
         perms = perms[element] as PermObject;
       } else {
-        perms = x
+        perms = x;
       }
     }
   }
@@ -34,7 +32,7 @@ export default function (permission: string, value: boolean, perms: PermObject):
   element = permArray.shift();
 
   let result = !(element in perms);
-  let x = perms[element];
+  const x = perms[element];
 
   if (typeof x === 'boolean' || result) {
     perms[element] = value;
@@ -42,8 +40,6 @@ export default function (permission: string, value: boolean, perms: PermObject):
     result = !('_' in x);
     x._ = value;
   }
-
-
 
   return result;
 }
